@@ -2,11 +2,12 @@ import re
 import tkinter as tk
 from tkinter import ttk
 
-
+# Common weak passwords
 common_passwords = [
     '123456', 'password', '12345678', 'qwerty', 'abc123', 'password1', '111111'
 ]
 
+# Password strength logic
 def check_password_strength(password):
     score = 0
     feedback = []
@@ -42,6 +43,7 @@ def check_password_strength(password):
 
     return score, feedback
 
+# Real-time UI feedback
 def update_strength(event=None):
     password = password_entry.get()
     score, feedback = check_password_strength(password)
@@ -64,39 +66,40 @@ def update_strength(event=None):
         feedback_box.insert(tk.END, f + "\n")
     feedback_box.config(state='disabled')
 
-
+# --- UI Building ---
 root = tk.Tk()
 root.title("Advanced Password Strength Checker")
 root.geometry("450x320")
 root.resizable(False, False)
 
+# Modern styling
 style = ttk.Style(root)
 style.theme_use("clam")
 style.configure("TProgressbar", thickness=20, troughcolor='#e0e0e0', background='#4caf50')
 
-
+# Title
 tk.Label(root, text="🔐 Password Strength Checker", font=("Helvetica", 16, "bold")).pack(pady=10)
 
-
+# Entry
 tk.Label(root, text="Enter your password:", font=("Helvetica", 11)).pack()
 password_entry = tk.Entry(root, show="*", font=("Helvetica", 12), width=30)
 password_entry.pack(pady=5)
 password_entry.bind("<KeyRelease>", update_strength)
 
-
+# Strength bar
 progress_bar = ttk.Progressbar(root, length=300, maximum=100, value=0)
 progress_bar.pack(pady=10)
 
-
+# Result label
 result_var = tk.StringVar()
 result_label = tk.Label(root, textvariable=result_var, font=("Helvetica", 12, "bold"))
 result_label.pack()
 
-
+# Feedback box
 tk.Label(root, text="Suggestions:", font=("Helvetica", 11)).pack(pady=5)
 feedback_box = tk.Text(root, height=5, width=50, font=("Helvetica", 10), bg="#f9f9f9", wrap='word', bd=1, relief='sunken')
 feedback_box.pack(pady=5)
 feedback_box.config(state='disabled')
 
-
+# Start app
 root.mainloop()
